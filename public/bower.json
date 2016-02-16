@@ -1,0 +1,8 @@
+{
+  "name": "rep_professor_ui",
+  "version": "0.0.1",
+  "dependencies": {
+    "ng-token-auth" : "~0.0.28"
+  },
+  "private": true
+}

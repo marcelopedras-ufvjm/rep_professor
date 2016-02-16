@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :status_codes, except: [:new, :edit]
   resources :employees, except: [:new, :edit]
   resources :attendance_reports, except: [:new, :edit]
