@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-02-16
+  note: MyText
+  employee_id: 
+  event_code_id: 
+  attendance_report_id: 
+
+two:
+  date: 2016-02-16
+  note: MyText
+  employee_id: 
+  event_code_id: 
+  attendance_report_id: 

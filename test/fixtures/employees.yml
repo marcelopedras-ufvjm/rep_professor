@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  siape: MyString
+  effective: false
+  course_id: 
+  status_code_id: 
+
+two:
+  name: MyString
+  siape: MyString
+  effective: false
+  course_id: 
+  status_code_id: 
