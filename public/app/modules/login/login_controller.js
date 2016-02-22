@@ -3,13 +3,42 @@
 //});
 
 
-mainApp.controller('LoginController', function($auth,$http){
+mainApp.controller('LoginController', function($rootScope, $scope, $auth,$http){
     var self = this;
 
     self.attributes = {
         email: '',
         password: ''
     };
+
+    //$rootScope.$on('auth:validation-error', function(ev, user) {
+    //    alert('auth:validation-error');
+    //});
+    //
+    //$rootScope.$on('auth:session-expired', function(ev, user) {
+    //    alert('auth:session-expired');
+    //});
+    //
+    //$rootScope.$on('auth:validation-success', function(ev, user) {
+    //    alert('auth:validation-success');
+    //    var ls = JSON.parse(localStorage.getItem("auth_headers"));
+    //    for (var attrname in  ls) {
+    //        $http.defaults.headers.common[attrname] = ls[attrname];
+    //    }
+    //});
+
+    //$rootScope.$on('auth:login-success', function(ev, user) {
+    //    alert('auth:login-success');
+    //});
+    //
+    //$rootScope.$on('auth:login-error', function(ev, user) {
+    //    alert('auth:login-error');
+    //});
+
+
+
+
+
 
     self.handleLoginBtnClick = function() {
         $auth.submitLogin(self.attributes)
@@ -18,7 +47,7 @@ mainApp.controller('LoginController', function($auth,$http){
                 self.attributes.email = ''
                 self.attributes.password = ''
 
-                console.log("sucesso")
+               // console.log("sucesso")
 
             })
             .catch(function(resp) {
@@ -28,10 +57,11 @@ mainApp.controller('LoginController', function($auth,$http){
     };
 
     self.handleCoursesBtnClick = function() {
-        $http.get('/courses').then(function(resp){
-            console.log(resp)
-        })
-            .catch(function(resp){
+        $http.get('/courses').then(function (resp) {
+
+                console.log(resp)
+            })
+            .catch(function (resp) {
                 console.log(resp)
             });
     };
