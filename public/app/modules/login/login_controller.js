@@ -3,7 +3,7 @@
 //});
 
 
-mainApp.controller('LoginController', function($rootScope, $scope, $auth,$http){
+mainApp.controller('LoginController', function($rootScope, $scope, $auth,$http,$location){
     var self = this;
 
     self.attributes = {
@@ -44,10 +44,11 @@ mainApp.controller('LoginController', function($rootScope, $scope, $auth,$http){
         $auth.submitLogin(self.attributes)
             .then(function(resp) {
                 // handle success response
-                self.attributes.email = ''
-                self.attributes.password = ''
+                self.attributes.email = '',
+                self.attributes.password = '',
 
                // console.log("sucesso")
+                $location.path("/main")
 
             })
             .catch(function(resp) {
