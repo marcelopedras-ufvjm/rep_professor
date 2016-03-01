@@ -10,14 +10,19 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.boo
     })
 .config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when('/', {
+            .otherwise({
                 templateUrl: '/app/modules/login/login.html',
                 controller: 'LoginController',
                 controllerAs : 'myCtrl'
             })
-            .when('/', {
-                templateUrl: '/app/modules/main/main.html',
-                controller: 'MainController',
+            .when('/login', {
+                templateUrl: '/app/modules/login/login.html',
+                controller: 'LoginController',
+                controllerAs : 'myCtrl'
+            })
+            .when('/home', {
+                templateUrl: '/app/modules/home/home.html',
+                controller: 'HomeController',
                 controllerAs : 'myCtrl'
             });
 }])
@@ -64,5 +69,27 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.boo
     // Add the interceptor to the $httpProvider.
 
     $httpProvider.interceptors.push('AuthInterceptor');
-});
+})
+    .run( function($rootScope, $location, $auth) {
+
+        // register listener to watch route changes
+        $rootScope.$on( "$routeChangeStart", function(event, next) {
+                $auth.validateUser()
+                    .then(function (resp) {
+                        if ('$$route' in next) {
+                            if (next.$$route.originalPath == '/login') {
+                                $location.path('home')
+                            }
+                        } else {
+                            $location.path('home')
+                        }
+                    })
+                    .catch(function (resp) {
+                        console.log(resp);
+                        if (next.$$route.originalPath !== 'login') {
+                            $location.path('login')
+                        }
+                    })
+        });
+    });
 
