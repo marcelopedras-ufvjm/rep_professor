@@ -1,7 +1,10 @@
 class CoursesController < ApplicationController
+  authorize_resource
 
   before_action :authenticate_user!
   before_action :set_course, only: [:show, :update, :destroy]
+
+  #load_and_authorize_resource
 
   # GET /courses
   # GET /courses.json

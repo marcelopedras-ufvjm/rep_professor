@@ -19,4 +19,14 @@ var self = this;
                 console.log(resp)
             });
     };
+
+    self.handleCourseBtnClick = function() {
+        $http.get('/courses/1').then(function (resp) {
+
+                console.log(resp)
+            })
+            .catch(function (resp) {
+                console.log(resp)
+            });
+    };
 });

@@ -13,6 +13,7 @@ gem 'sqlite3'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'omniauth'
+gem 'cancancan', '~> 1.10'
 
 
 
