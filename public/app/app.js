@@ -1,5 +1,5 @@
 
-var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.bootstrap'])
+var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.bootstrap'])
 .config(function($authProvider) {
         $authProvider.configure({
             apiUrl: 'http://localhost:3000',
@@ -8,28 +8,51 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.boo
 
         });
     })
-.config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-            .otherwise({
-                templateUrl: '/app/modules/login/login.html',
-                controller: 'LoginController',
-                controllerAs : 'myCtrl'
+.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouteProvider) {
+
+        $urlRouteProvider.otherwise("/login");
+        $stateProvider
+            .state('/login', {
+                url: '/login',
+                //templateUrl: '/app/modules/login/login.html',
+                views: {
+                    "body" : {
+                        templateUrl: "/app/modules/login/login.html",
+                        controller: 'LoginController',
+                        controllerAs : 'myCtrl'
+                    }//,
+                    //"body"   : {
+                    //    templateUrl: "/app/modules/course/course.html",
+                    //    controller: 'CourseController',
+                    //    controllerAs: 'myCtrl'
+                    //}
+                }
+                //controller: 'LoginController',
+                //controllerAs : 'myCtrl'
             })
-            .when('/login', {
-                templateUrl: '/app/modules/login/login.html',
-                controller: 'LoginController',
-                controllerAs : 'myCtrl'
+            .state('/home', {
+                url: '/home',
+                views: {
+                    "body": {
+                        templateUrl: '/app/modules/home/home.html',
+                        controller: 'HomeController',
+                        controllerAs: 'myCtrl'
+                    }
+                }
             })
-            .when('/home', {
-                templateUrl: '/app/modules/home/home.html',
-                controller: 'HomeController',
-                controllerAs : 'myCtrl'
-            });
+            .state('/course', {
+                url: '/course',
+                views: {
+                    templateUrl: '/app/modules/course/course.html',
+                    controller: 'CourseController',
+                    controllerAs: 'myCtrl'
+                }
+            })
 }])
 .config(function ($provide, $httpProvider) {
 
     // Intercept http calls.
-    $provide.factory('AuthInterceptor', function ($q) {
+    $provide.factory('AuthInterceptor', function ($q, $rootScope) {
         return {
             // On request success
             request: function (config) {
@@ -63,6 +86,16 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.boo
                 }
                 return resp || $q.when(resp);
             }
+            ,
+
+            responseError : function(resp) {
+                if (resp && resp.status === 401) {
+                    $rootScope.$emit('loginRequired', resp);
+                }
+
+                return $q.reject(resp);
+                //return resp || $q.when(resp);
+            }
         };
     });
 
@@ -74,22 +107,51 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ngRoute','ui.boo
 
         // register listener to watch route changes
         $rootScope.$on( "$routeChangeStart", function(event, next) {
-                $auth.validateUser()
-                    .then(function (resp) {
-                        if ('$$route' in next) {
-                            if (next.$$route.originalPath == '/login') {
-                                $location.path('home')
-                            }
-                        } else {
-                            $location.path('home')
-                        }
-                    })
-                    .catch(function (resp) {
-                        console.log(resp);
-                        if (next.$$route.originalPath !== 'login') {
-                            $location.path('login')
-                        }
-                    })
+            //console.log(arguments);
+            if ('$$route' in next) {
+                if (next.$$route.originalPath == '/login') {
+                    if($auth.userIsAuthenticated()) {
+                        $location.path('home');
+                    } else {
+                        $auth.validateUser()
+                            .then(function (resp) {
+                                $location.path('home');
+                            })
+                            .catch(function (resp) {})
+                    }
+                } else {
+                    if(!$auth.userIsAuthenticated()) {
+                        $auth.validateUser()
+                            .then(function (resp) {
+                                //$location.path('home');
+                            })
+                            .catch(function (resp) {
+                                $location.path("login")
+                            })
+
+                    }
+                }
+            }
+                //$auth.validateUser()
+                //    .then(function (resp) {
+                //        if ('$$route' in next) {
+                //            if (next.$$route.originalPath == '/login') {
+                //                $location.path('home')
+                //            }
+                //        } else {
+                //            $location.path('home')
+                //        }
+                //    })
+                //    .catch(function (resp) {
+                //        console.log(resp);
+                //        if (next.$$route.originalPath !== 'login') {
+                //            $location.path('login')
+                //        }
+                //    })
+        });
+        $rootScope.$on( "loginRequired", function(event, resp) {
+                $location.path('login');
+
         });
     });
 

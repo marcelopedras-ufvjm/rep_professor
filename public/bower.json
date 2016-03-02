@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "dependencies": {
     "ng-token-auth" : "~0.0.28",
-    "angular-route" : "~1.4.9",
     "angular-bootstrap" : "~1.2.1",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "angular-ui-router" : "~0.2.18"
+
   },
   "private": true
 }

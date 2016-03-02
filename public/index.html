@@ -3,19 +3,22 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registro Eletrônico de Ponto para Professores</title>
 </head>
 <body>
-<div ng-view=""></div>
+<div ui-view="header"></div>
+<div ui-view="body"></div>
 </body>
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/bower_components/angular-cookie/angular-cookie.js"></script>
-<script src="/bower_components/angular-route/angular-route.js"></script>
+<!--<script src="/bower_components/angular-route/angular-route.js"></script>-->
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="/bower_components/ng-token-auth/dist/ng-token-auth.js"></script>
 <script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 <script src="/app/app.js"></script>
 <script src="/app/modules/login/login_controller.js"></script>
 <script src="/app/modules/home/home_controller.js"></script>
+<script src="/app/modules/course/course_controller.js"></script>
 
 
 </html>
