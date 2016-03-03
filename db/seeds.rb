@@ -33,4 +33,4 @@ course = Course.where('name = ?','Engenharia Química').first
 status = StatusCode.where('description = ?', 'ativo').first
 Employee.create(siape: '2075068', name: 'Anamaria de Oliveira Cardoso', effective: true, course_id: course.id, status_code_id: status.id)
 
-User.create(email: 'marcelo.pedras@ict.ufvjm.edu.br', password: '********', password_confirmation: '********', name: 'Marcelo Pedras', nickname: 'marcelo.pedras')
+User.create(email: 'marcelo.pedras@ict.ufvjm.edu.br', password: '12345678', password_confirmation: '12345678', name: 'Marcelo Pedras', nickname: 'marcelo.pedras', roles: [:admin])

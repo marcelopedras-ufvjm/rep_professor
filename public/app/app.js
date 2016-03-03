@@ -1,5 +1,5 @@
 
-var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.bootstrap'])
+var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.bootstrap', 'ngResource'])
 .config(function($authProvider) {
         $authProvider.configure({
             apiUrl: 'http://localhost:3000',
@@ -43,9 +43,11 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.b
             .state('/course', {
                 url: '/course',
                 views: {
-                    templateUrl: '/app/modules/course/course.html',
-                    controller: 'CourseController',
-                    controllerAs: 'myCtrl'
+                    "body": {
+                        templateUrl: '/app/modules/course/course.html',
+                        controller: 'CourseController',
+                        controllerAs: 'myCtrl'
+                    }
                 }
             })
 }])
