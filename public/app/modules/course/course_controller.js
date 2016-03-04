@@ -11,7 +11,9 @@ mainApp.controller('CourseController', function($rootScope, $scope, $auth,$http,
         //    });
 
 
-        Course.index().then(function(resp){console.log(resp)})
+        Course.index().$promise.then(function(resp){
+            console.log(resp)
+        })
 
     };
 
@@ -35,21 +37,21 @@ mainApp.controller('CourseController', function($rootScope, $scope, $auth,$http,
         //        });
         //});
 
-        Course.show(1).then(function(resp){
+        Course.show(1).$promise.then(function(resp){
             console.log(resp)}
         );
     };
 
     self.handleCreateCourseBtnClick = function() {
 
-        Course.create({name : "Teste"}).then(function(resp){
+        Course.create({name: "TEste "}).$promise.then(function(resp){
             console.log(resp)}
         );
     };
 
     self.handleDeleteCourseBtnClick = function() {
 
-        Course.destroy(7).then(function(resp){
+        Course.destroy(7).$promise.then(function(resp){
             console.log(resp)}
         );
     };

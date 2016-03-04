@@ -54,6 +54,6 @@ class AttendanceReportsController < ApplicationController
     end
 
     def attendance_report_params
-      params.require(:attendance_report).permit(:year, :month, :generated_in, :course_id)
+      params.permit(:year, :month, :generated_in, :course_id)
     end
 end

@@ -54,6 +54,6 @@ class StatusCodesController < ApplicationController
     end
 
     def status_code_params
-      params.require(:status_code).permit(:code, :integer, :description)
+      params.permit(:code, :integer, :description)
     end
 end

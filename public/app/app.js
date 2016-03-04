@@ -1,5 +1,5 @@
 
-var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.bootstrap', 'restangular'])
+var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.bootstrap', 'ngResource'])
 .config(function($authProvider) {
         $authProvider.configure({
             apiUrl: 'http://localhost:3000',
@@ -20,7 +20,7 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.b
                         templateUrl: "/app/modules/login/login.html",
                         controller: 'LoginController',
                         controllerAs : 'myCtrl'
-                    }//,
+                    }
                     //"body"   : {
                     //    templateUrl: "/app/modules/course/course.html",
                     //    controller: 'CourseController',
@@ -108,10 +108,10 @@ var mainApp = angular.module('rep_professor',['ng-token-auth', 'ui.router','ui.b
     .run( function($rootScope, $location, $auth) {
 
         // register listener to watch route changes
-        $rootScope.$on( "$routeChangeStart", function(event, next) {
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             //console.log(arguments);
-            if ('$$route' in next) {
-                if (next.$$route.originalPath == '/login') {
+            if ('url' in toState) {
+                if (toState.url == '/login') {
                     if($auth.userIsAuthenticated()) {
                         $location.path('home');
                     } else {
